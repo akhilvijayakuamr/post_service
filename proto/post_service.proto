@@ -8,6 +8,9 @@ service PostService {
     rpc GetUniquePost(GetUniquePostRequest) returns (GetUniquePostResponse);
     rpc LikePost(LikePostRequest) returns (LikePostResponse);
     rpc CommentPost(CommentPostRequest) returns (CommentPostResponse);
+    rpc CommentReply(CommentReplyRequest) returns (CommentReplyResponse);
+    
+
 }
 
 message CreatePostRequest {
@@ -39,10 +42,21 @@ message Post {
     string date = 6;
     string postimage = 7;
     bool like = 8;
+    int32 like_count = 9;
+    int32 comment_count = 10;
 }
 
 message GetAllPostResponse{
     repeated Post posts = 1;
+}
+
+message Reply{
+    int32 replay_id =1;
+    int32 user_id = 2;
+    int32 mention_user_id = 3;
+    string mention_user = 4;
+    string content = 5;
+    string date = 6;
 }
 
 
@@ -51,6 +65,7 @@ message Comment{
     int32 user_id = 2;
     string content = 3;
     string date = 4;
+    repeated Reply replies = 5;
 }
 
 
@@ -70,7 +85,9 @@ message GetUniquePostResponse{
     string date = 6;
     string postimage = 7;
     bool like = 8;
-    repeated Comment comments = 9;
+    int32 like_count = 9;
+    int32 comment_count = 10;
+    repeated Comment comments = 11;
 }
 
 
@@ -95,6 +112,25 @@ message CommentPostRequest{
 message CommentPostResponse{
     string message = 1;
 }
+
+
+message CommentReplyRequest{
+    int32 user_id = 1;
+    int32 mention_user_id = 2;
+    int32 comment_id = 3;
+    string mention_user_fullname = 4;
+    string content = 5;
+}
+
+
+message CommentReplyResponse{
+    string message = 1;
+}
+
+
+
+
+
 
 
 

@@ -8,9 +8,10 @@ grpcio==1.66.1
 grpcio-tools==1.66.1
 jmespath==1.0.1
 pillow==10.4.0
-protobuf==5.28.0
+protobuf==5.27.2
 psycopg2-binary==2.9.9
 python-dateutil==2.9.0.post0
+python-decouple==3.8
 s3transfer==0.10.2
 six==1.16.0
 sqlparse==0.5.1

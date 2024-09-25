@@ -18,9 +18,6 @@ class Post(models.Model):
     
     
 # Post Like
-
-
-
 class Like(models.Model):
     user = models.IntegerField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -41,9 +38,10 @@ class Comment(models.Model):
     
 # Post comment replay
 
-
-class Replay(models.Model):
+class Reply(models.Model):
     user = models.IntegerField()
+    mention_user = models.IntegerField()
+    mention_user_full_name = models.CharField(max_length=150)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)

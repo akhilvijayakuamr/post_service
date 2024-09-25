@@ -1,7 +1,7 @@
 from proto import post_service_pb2
 from proto import post_service_pb2_grpc
 from post_app.views import *
-from post_app.models import Like
+from post_app.models import Like, Comment
 
 class PostServiceServicer(post_service_pb2_grpc.PostServiceServicer):
     
@@ -19,19 +19,8 @@ class PostServiceServicer(post_service_pb2_grpc.PostServiceServicer):
     
     
     def GetAllPost(self, request, context):
-        user_id = request.user_id
-        posts = all_posts(context)
-        print(posts)
-        post_list = [post_service_pb2.Post( post_id = post.id,
-                                            user_id = post.user_id,
-                                            title = post.title,
-                                            content = post.content,
-                                            link = post.link,
-                                            date = str(post.created_at),
-                                            postimage = post.post_image.url,
-                                            like = Like.objects.filter(post=post, user=user_id).exists()
-                                            ) for post in posts]
-        return post_service_pb2.GetAllPostResponse(posts = post_list)
+        posts = all_posts(request, context)
+        return post_service_pb2.GetAllPostResponse(posts = posts)
     
     
     
@@ -44,16 +33,6 @@ class PostServiceServicer(post_service_pb2_grpc.PostServiceServicer):
         post = response['post']
         comments = response['comments']
         
-        
-        all_comments = [post_service_pb2.Comment(
-            comment_id = comment.id,
-            user_id = comment.user,
-            content = comment.content,
-            date = str(comment.created_at)
-        )
-        for comment in comments ]
-        
-        
         return post_service_pb2.GetUniquePostResponse(
             post_id = post.id,
             user_id = post.user_id,
@@ -63,7 +42,9 @@ class PostServiceServicer(post_service_pb2_grpc.PostServiceServicer):
             date = str(post.created_at),
             postimage = post.post_image.url,
             like = Like.objects.filter(post=post, user=user_id).exists(),
-            comments = all_comments
+            like_count = Like.objects.filter(post=post).count(),
+            comment_count = Comment.objects.filter(post=post).count(),
+            comments = comments
         )
         
         
@@ -82,3 +63,14 @@ class PostServiceServicer(post_service_pb2_grpc.PostServiceServicer):
     def CommentPost(self, request, context):
         response = comment_post(request, context)
         return post_service_pb2.CommentPostResponse(message=response['message'])
+    
+    
+    # Replay comment
+    
+    
+    def CommentReply(self, request, context):
+        response = reply_comment(request, context)
+        return post_service_pb2.CommentReplyResponse(message=response['message'])
+    
+    
+  

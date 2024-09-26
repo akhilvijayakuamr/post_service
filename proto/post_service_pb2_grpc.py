@@ -64,6 +64,11 @@ class PostServiceStub(object):
                 request_serializer=post__service__pb2.CommentReplyRequest.SerializeToString,
                 response_deserializer=post__service__pb2.CommentReplyResponse.FromString,
                 _registered_method=True)
+        self.UniqueUserPosts = channel.unary_unary(
+                '/post_service.PostService/UniqueUserPosts',
+                request_serializer=post__service__pb2.UniqueUserPostsRequest.SerializeToString,
+                response_deserializer=post__service__pb2.UniqueUserPostsResponse.FromString,
+                _registered_method=True)
 
 
 class PostServiceServicer(object):
@@ -105,6 +110,12 @@ class PostServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UniqueUserPosts(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PostServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -137,6 +148,11 @@ def add_PostServiceServicer_to_server(servicer, server):
                     servicer.CommentReply,
                     request_deserializer=post__service__pb2.CommentReplyRequest.FromString,
                     response_serializer=post__service__pb2.CommentReplyResponse.SerializeToString,
+            ),
+            'UniqueUserPosts': grpc.unary_unary_rpc_method_handler(
+                    servicer.UniqueUserPosts,
+                    request_deserializer=post__service__pb2.UniqueUserPostsRequest.FromString,
+                    response_serializer=post__service__pb2.UniqueUserPostsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -301,6 +317,33 @@ class PostService(object):
             '/post_service.PostService/CommentReply',
             post__service__pb2.CommentReplyRequest.SerializeToString,
             post__service__pb2.CommentReplyResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UniqueUserPosts(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/UniqueUserPosts',
+            post__service__pb2.UniqueUserPostsRequest.SerializeToString,
+            post__service__pb2.UniqueUserPostsResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -9,6 +9,7 @@ service PostService {
     rpc LikePost(LikePostRequest) returns (LikePostResponse);
     rpc CommentPost(CommentPostRequest) returns (CommentPostResponse);
     rpc CommentReply(CommentReplyRequest) returns (CommentReplyResponse);
+    rpc UniqueUserPosts(UniqueUserPostsRequest) returns (UniqueUserPostsResponse);
     
 
 }
@@ -65,7 +66,8 @@ message Comment{
     int32 user_id = 2;
     string content = 3;
     string date = 4;
-    repeated Reply replies = 5;
+    int32 reply_count = 5;
+    repeated Reply replies = 6;
 }
 
 
@@ -126,6 +128,18 @@ message CommentReplyRequest{
 message CommentReplyResponse{
     string message = 1;
 }
+
+
+message UniqueUserPostsRequest{
+    int32 user_id = 1;
+}
+
+
+
+message UniqueUserPostsResponse{
+    repeated Post posts = 1;
+}
+
 
 
 

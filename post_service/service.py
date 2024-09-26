@@ -73,4 +73,13 @@ class PostServiceServicer(post_service_pb2_grpc.PostServiceServicer):
         return post_service_pb2.CommentReplyResponse(message=response['message'])
     
     
+    # Unique user posts
+    
+    def UniqueUserPosts(self, request, context):
+        posts = user_all_posts(request, context)
+        return post_service_pb2.UniqueUserPostsResponse(posts = posts)
+
+        
+    
+    
   

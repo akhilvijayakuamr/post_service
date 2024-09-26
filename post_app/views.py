@@ -83,6 +83,7 @@ def unique_post(request, context):
         for comment in comments:
             
             replies = Reply.objects.filter(comment=comment).order_by('created_at')
+            replies_count = Reply.objects.filter(comment=comment).count()
             
             all_replies = [post_service_pb2.Reply(
                 replay_id = reply.id,
@@ -98,6 +99,7 @@ def unique_post(request, context):
                 user_id = comment.user,
                 content = comment.content,
                 date = str(comment.created_at),
+                reply_count=replies_count,
                 replies=all_replies
             ))  
         
@@ -202,11 +204,44 @@ def reply_comment(request, context):
                         comment=comment, 
                         content=content)
         reply.save()
+        
+        
         return{
             'message': 'reply on post'
         }
+        
     except Comment.DoesNotExist:
         content.abort(StatusCode.NOT_FOUND, "Comment is not found")
+        
+        
+        
+        
+# Unique user allposts
+
+
+
+def user_all_posts(request, context):
+    print("it is wrking")
+    try:
+        user_id = request.user_id
+        posts = Post.objects.filter(user_id=user_id, is_delete=False)
+        
+        
+        post_list = [post_service_pb2.Post( post_id = post.id,
+                                            user_id = post.user_id,
+                                            title = post.title,
+                                            content = post.content,
+                                            link = post.link,
+                                            date = str(post.created_at),
+                                            postimage = post.post_image.url,
+                                            like = Like.objects.filter(post=post, user=user_id).exists(),
+                                            like_count = Like.objects.filter(post=post).count(),
+                                            comment_count = Comment.objects.filter(post=post).count(),
+                                            ) for post in posts]
+        
+        return post_list
+    except Post.DoesNotExist:
+        context.abort(StatusCode.NOT_FOUND, "Posts not found")
            
        
 

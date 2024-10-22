@@ -10,6 +10,14 @@ service PostService {
     rpc CommentPost(CommentPostRequest) returns (CommentPostResponse);
     rpc CommentReply(CommentReplyRequest) returns (CommentReplyResponse);
     rpc UniqueUserPosts(UniqueUserPostsRequest) returns (UniqueUserPostsResponse);
+    rpc PostUpdate(PostUpdateRequest) returns (PostUpdateResponse);
+    rpc CommentDelete(CommentDeleteRequest) returns (CommentDeleteResponse);
+    rpc ReplyDelete(ReplyDeleteRequest) returns (ReplyDeleteResponse);
+    rpc PostDelete(PostDeleteRequest) returns (PostDeleteResponse);
+    rpc PostReport(PostReportRequest) returns (PostReportResponse);
+    rpc GetAllAdminPost(GetAllAdminPostRequest) returns (GetAllAdminPostResponse);
+    rpc PostHide(PostHideRequest) returns (PostHideResponse);
+  
     
 
 }
@@ -101,8 +109,8 @@ message LikePostRequest{
 
 message LikePostResponse{
     string message = 1;
+    int32 user_id = 2;
 }
-
 
 message CommentPostRequest{
     int32 post_id = 1;
@@ -113,6 +121,7 @@ message CommentPostRequest{
 
 message CommentPostResponse{
     string message = 1;
+    int32 user_id = 2;
 }
 
 
@@ -139,6 +148,117 @@ message UniqueUserPostsRequest{
 message UniqueUserPostsResponse{
     repeated Post posts = 1;
 }
+
+
+
+
+message PostUpdateRequest{
+    int32 post_id = 1;
+    int32 user_id = 2;
+    string title = 3;
+    bytes post_image = 4;
+    string content = 5;
+    string link = 6;
+}
+
+message PostUpdateResponse{
+    int32 post_id = 1;
+    string message = 2;
+}
+
+
+
+message CommentDeleteRequest{
+    int32 comment_id = 1;
+}
+
+
+message CommentDeleteResponse{
+    string message = 1;
+}
+
+
+message ReplyDeleteRequest{
+    int32 reply_id = 1;
+}
+
+
+message ReplyDeleteResponse{
+    string message = 1;
+}
+
+
+
+message PostDeleteRequest{
+    int32 post_id = 1;
+}
+
+
+message PostDeleteResponse{
+    string message = 1;
+}
+
+
+
+message PostReportRequest{
+    int32 post_id = 1;
+    int32 report_user_id = 2;
+    string reson = 3;
+}
+
+
+
+message PostReportResponse{
+    string message = 1;
+}
+
+
+message GetAllAdminPostRequest{}
+
+message Report{
+    int32 report_id = 1;
+    int32 report_user_id = 2;
+    string reason = 3;
+    string created_at = 4;
+}
+
+message AdminPost {
+    int32 post_id = 1;
+    int32 user_id = 2;
+    string title = 3;
+    string content = 4;
+    string link = 5;
+    string date = 6;
+    string postimage = 7;
+    bool is_block = 8;
+    int32 like_count = 9;
+    int32 comment_count = 10;
+    bool is_delete = 11;
+    repeated Report reports = 12;
+    bool is_report = 13;
+
+
+}
+
+
+
+message GetAllAdminPostResponse {
+    repeated AdminPost posts = 1;
+}
+
+
+
+message PostHideRequest{
+    int32 post_id = 1;
+}
+
+
+message PostHideResponse{
+    string message = 1;
+}
+
+
+
 
 
 

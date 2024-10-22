@@ -15,6 +15,7 @@ class Post(models.Model):
     link = models.CharField(null=False, blank=False)
     created_at = models.DateTimeField(default=timezone.now)
     is_delete = models.BooleanField(default=False)
+    is_block = models.BooleanField(default=False)
     
     
 # Post Like
@@ -44,6 +45,18 @@ class Reply(models.Model):
     mention_user_full_name = models.CharField(max_length=150)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    is_delete = models.BooleanField(default=False)
+    
+    
+    
+# Post Report
+
+
+class Report(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    report_user_id = models.IntegerField()
+    reson = models.TextField(null=False, blank=False)
     created_at = models.DateTimeField(default=timezone.now)
     is_delete = models.BooleanField(default=False)
     

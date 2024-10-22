@@ -69,6 +69,41 @@ class PostServiceStub(object):
                 request_serializer=post__service__pb2.UniqueUserPostsRequest.SerializeToString,
                 response_deserializer=post__service__pb2.UniqueUserPostsResponse.FromString,
                 _registered_method=True)
+        self.PostUpdate = channel.unary_unary(
+                '/post_service.PostService/PostUpdate',
+                request_serializer=post__service__pb2.PostUpdateRequest.SerializeToString,
+                response_deserializer=post__service__pb2.PostUpdateResponse.FromString,
+                _registered_method=True)
+        self.CommentDelete = channel.unary_unary(
+                '/post_service.PostService/CommentDelete',
+                request_serializer=post__service__pb2.CommentDeleteRequest.SerializeToString,
+                response_deserializer=post__service__pb2.CommentDeleteResponse.FromString,
+                _registered_method=True)
+        self.ReplyDelete = channel.unary_unary(
+                '/post_service.PostService/ReplyDelete',
+                request_serializer=post__service__pb2.ReplyDeleteRequest.SerializeToString,
+                response_deserializer=post__service__pb2.ReplyDeleteResponse.FromString,
+                _registered_method=True)
+        self.PostDelete = channel.unary_unary(
+                '/post_service.PostService/PostDelete',
+                request_serializer=post__service__pb2.PostDeleteRequest.SerializeToString,
+                response_deserializer=post__service__pb2.PostDeleteResponse.FromString,
+                _registered_method=True)
+        self.PostReport = channel.unary_unary(
+                '/post_service.PostService/PostReport',
+                request_serializer=post__service__pb2.PostReportRequest.SerializeToString,
+                response_deserializer=post__service__pb2.PostReportResponse.FromString,
+                _registered_method=True)
+        self.GetAllAdminPost = channel.unary_unary(
+                '/post_service.PostService/GetAllAdminPost',
+                request_serializer=post__service__pb2.GetAllAdminPostRequest.SerializeToString,
+                response_deserializer=post__service__pb2.GetAllAdminPostResponse.FromString,
+                _registered_method=True)
+        self.PostHide = channel.unary_unary(
+                '/post_service.PostService/PostHide',
+                request_serializer=post__service__pb2.PostHideRequest.SerializeToString,
+                response_deserializer=post__service__pb2.PostHideResponse.FromString,
+                _registered_method=True)
 
 
 class PostServiceServicer(object):
@@ -116,6 +151,48 @@ class PostServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PostUpdate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CommentDelete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ReplyDelete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PostDelete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PostReport(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetAllAdminPost(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PostHide(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PostServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -153,6 +230,41 @@ def add_PostServiceServicer_to_server(servicer, server):
                     servicer.UniqueUserPosts,
                     request_deserializer=post__service__pb2.UniqueUserPostsRequest.FromString,
                     response_serializer=post__service__pb2.UniqueUserPostsResponse.SerializeToString,
+            ),
+            'PostUpdate': grpc.unary_unary_rpc_method_handler(
+                    servicer.PostUpdate,
+                    request_deserializer=post__service__pb2.PostUpdateRequest.FromString,
+                    response_serializer=post__service__pb2.PostUpdateResponse.SerializeToString,
+            ),
+            'CommentDelete': grpc.unary_unary_rpc_method_handler(
+                    servicer.CommentDelete,
+                    request_deserializer=post__service__pb2.CommentDeleteRequest.FromString,
+                    response_serializer=post__service__pb2.CommentDeleteResponse.SerializeToString,
+            ),
+            'ReplyDelete': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReplyDelete,
+                    request_deserializer=post__service__pb2.ReplyDeleteRequest.FromString,
+                    response_serializer=post__service__pb2.ReplyDeleteResponse.SerializeToString,
+            ),
+            'PostDelete': grpc.unary_unary_rpc_method_handler(
+                    servicer.PostDelete,
+                    request_deserializer=post__service__pb2.PostDeleteRequest.FromString,
+                    response_serializer=post__service__pb2.PostDeleteResponse.SerializeToString,
+            ),
+            'PostReport': grpc.unary_unary_rpc_method_handler(
+                    servicer.PostReport,
+                    request_deserializer=post__service__pb2.PostReportRequest.FromString,
+                    response_serializer=post__service__pb2.PostReportResponse.SerializeToString,
+            ),
+            'GetAllAdminPost': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAllAdminPost,
+                    request_deserializer=post__service__pb2.GetAllAdminPostRequest.FromString,
+                    response_serializer=post__service__pb2.GetAllAdminPostResponse.SerializeToString,
+            ),
+            'PostHide': grpc.unary_unary_rpc_method_handler(
+                    servicer.PostHide,
+                    request_deserializer=post__service__pb2.PostHideRequest.FromString,
+                    response_serializer=post__service__pb2.PostHideResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -344,6 +456,195 @@ class PostService(object):
             '/post_service.PostService/UniqueUserPosts',
             post__service__pb2.UniqueUserPostsRequest.SerializeToString,
             post__service__pb2.UniqueUserPostsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PostUpdate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/PostUpdate',
+            post__service__pb2.PostUpdateRequest.SerializeToString,
+            post__service__pb2.PostUpdateResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CommentDelete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/CommentDelete',
+            post__service__pb2.CommentDeleteRequest.SerializeToString,
+            post__service__pb2.CommentDeleteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ReplyDelete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/ReplyDelete',
+            post__service__pb2.ReplyDeleteRequest.SerializeToString,
+            post__service__pb2.ReplyDeleteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PostDelete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/PostDelete',
+            post__service__pb2.PostDeleteRequest.SerializeToString,
+            post__service__pb2.PostDeleteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PostReport(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/PostReport',
+            post__service__pb2.PostReportRequest.SerializeToString,
+            post__service__pb2.PostReportResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAllAdminPost(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/GetAllAdminPost',
+            post__service__pb2.GetAllAdminPostRequest.SerializeToString,
+            post__service__pb2.GetAllAdminPostResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PostHide(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/PostHide',
+            post__service__pb2.PostHideRequest.SerializeToString,
+            post__service__pb2.PostHideResponse.FromString,
             options,
             channel_credentials,
             insecure,

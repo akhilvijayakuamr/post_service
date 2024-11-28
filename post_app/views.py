@@ -40,7 +40,6 @@ def create_post(request, context):
     
 # Get all posts
 
-
 def all_posts(request, context):
     try:
         posts = Post.objects.filter(is_delete=False, is_block=False)
@@ -66,8 +65,6 @@ def all_posts(request, context):
 
 # Get unique post
 
-
-
 def unique_post(request, context):
     post_id = request.post_id
    
@@ -82,7 +79,7 @@ def unique_post(request, context):
         for comment in comments:
             
             replies = Reply.objects.filter(comment=comment, is_delete=False).order_by('created_at')
-            replies_count = Reply.objects.filter(comment=comment).count()
+            replies_count = Reply.objects.filter(comment=comment, is_delete=False).count()
             
             all_replies = [post_service_pb2.Reply(
                 replay_id = reply.id,
@@ -102,7 +99,6 @@ def unique_post(request, context):
                 replies=all_replies
             )) 
             
-        
         return {
             "post":post,
             "comments":all_comments
@@ -145,7 +141,6 @@ def like_post(request, context):
         
         
         
-        
 # Comment post
 
 def comment_post(request, context):
@@ -155,7 +150,6 @@ def comment_post(request, context):
     
     if post_id is None:
         context.abort(StatusCode.NOT_FOUND, "Missing parameter")
-         
          
     if user_id is None:
         context.abort(StatusCode.NOT_FOUND, "Missing parameter")
@@ -169,17 +163,20 @@ def comment_post(request, context):
         comment.save()
     
         return {
-            'message': 'comment on post',
-            'user_id':post.user_id
+            'message':'comment on post',
+            'user_id':post.user_id,
+            'comment_id':comment.id,
+            'reply_count':0,
+            'content':comment.content,
+            'date':str(comment.created_at),
+            'id':comment.user
         }
     except Post.DoesNotExist:
         context.abort(StatusCode.NOT_FOUND, "Post not found")
         
         
         
-        
 # Replay comment
-
 
 def reply_comment(request, context):
     
@@ -188,9 +185,6 @@ def reply_comment(request, context):
     comment_id = request.comment_id
     mention_user_fullname = request.mention_user_fullname
     content = request.content
-    
-
-    
     
     if (user_id is None or
        mention_user_id is None or
@@ -208,21 +202,39 @@ def reply_comment(request, context):
                         comment=comment, 
                         content=content)
         reply.save()
+
+        print(reply)
         
+        data = {
+            'message': 'reply on post',
+            'user_id':reply.user,
+            'mention_user_id':reply.mention_user,
+            'comment_id':reply.comment.id,
+            'reply_id':reply.id,
+            'content':reply.content,
+            'date':str(reply.created_at),
+            'mention_user_full_name':reply.mention_user_full_name
+        }
+
+        print("data", data)
         
         return{
-            'message': 'reply on post'
+            'message': 'reply on post',
+            'user_id':reply.user,
+            'mention_user_id':reply.mention_user,
+            'comment_id':reply.comment.id,
+            'reply_id':reply.id,
+            'content':reply.content,
+            'date':str(reply.created_at),
+            'mention_user_full_name':reply.mention_user_full_name
         }
         
     except Comment.DoesNotExist:
         context.abort(StatusCode.NOT_FOUND, "Comment is not found")
         
-        
-        
-        
+          
+          
 # Unique user allposts
-
-
 
 def user_all_posts(request, context):
     try:
@@ -248,9 +260,7 @@ def user_all_posts(request, context):
         
         
         
-        
 # Post Update
-
 
 def update_post(request, context):
     post_id = request.post_id
@@ -285,9 +295,7 @@ def update_post(request, context):
         
         
         
-        
 # Comment delete
-
 
 def delete_comment(request, context):
     comment_id = request.comment_id
@@ -301,10 +309,9 @@ def delete_comment(request, context):
     except Comment.DoesNotExist:
         context.abort(StatusCode.NOT_FOUND, "Comment is not found")
         
-        
-        
+         
+           
 # Reply delete
-
 
 def delete_reply(request, context):
     reply_id = request.reply_id
@@ -322,7 +329,6 @@ def delete_reply(request, context):
         
 # Post delete
 
-
 def delete_post(request, context):
     post_id = request.post_id
     try:
@@ -335,10 +341,9 @@ def delete_post(request, context):
     except Post.DoesNotExist:
         context.abort(StatusCode.NOT_FOUND, "Post is not found")
         
-        
-        
+         
+            
 # Post Report
-
 
 def report_post(request, context):
     post_id = request.post_id
@@ -355,8 +360,8 @@ def report_post(request, context):
         context.abort(StatusCode.NOT_FOUND, "Post is not found")
     
     
+    
 # Admin Get all posts
-
 
 def admin_all_posts(request, context):
     try:
@@ -386,10 +391,8 @@ def admin_all_posts(request, context):
         context.abort(StatusCode.NOT_FOUND, "Posts not found")     
         
         
-        
-        
+           
 # Hide unHide post
-
 
 def hide_post(request, context):
     post_id = request.post_id
@@ -410,6 +413,32 @@ def hide_post(request, context):
             
     except Post.DoesNotExist:
         context.abort(StatusCode.NOT_FOUND, "Post is not found") 
+        
+        
+        
+# Get all dashboard post details
+
+def post_dashboard(context):
+    try:
+        all_post = Post.objects.all().count()
+        hide_post = Post.objects.filter(is_block=True).count()
+        deleted_post = Post.objects.filter(is_delete=True).count()
+        reported_post = Report.objects.values('post').distinct().count()
+        all_reports = Report.objects.all().count()
+        return {
+            'all_post':all_post,
+            'hide_post':hide_post,
+            'deleted_post':deleted_post,
+            'reported_post':reported_post,
+            'all_reports':all_reports
+        }
+    except Post.DoesNotExist:
+        context.abort(StatusCode.NOT_FOUND, "Post is not found") 
+    
+
+        
+        
+        
            
        
 

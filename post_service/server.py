@@ -14,7 +14,6 @@ from .service import PostServiceServicer
 
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 post_service_pb2_grpc.add_PostServiceServicer_to_server(PostServiceServicer(), server)
-print("Starting grpc server on port 50052......") 
 server.add_insecure_port('[::]:50052')
 server.start()
 

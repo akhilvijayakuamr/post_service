@@ -19,6 +19,7 @@ class Post(models.Model):
     
     
 # Post Like
+
 class Like(models.Model):
     user = models.IntegerField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -51,7 +52,6 @@ class Reply(models.Model):
     
     
 # Post Report
-
 
 class Report(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

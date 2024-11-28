@@ -5,7 +5,7 @@ import warnings
 
 from . import post_service_pb2 as post__service__pb2
 
-GRPC_GENERATED_VERSION = '1.66.1'
+GRPC_GENERATED_VERSION = '1.66.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -104,6 +104,11 @@ class PostServiceStub(object):
                 request_serializer=post__service__pb2.PostHideRequest.SerializeToString,
                 response_deserializer=post__service__pb2.PostHideResponse.FromString,
                 _registered_method=True)
+        self.DashboardPostDetails = channel.unary_unary(
+                '/post_service.PostService/DashboardPostDetails',
+                request_serializer=post__service__pb2.DashboardPostDetailsRequest.SerializeToString,
+                response_deserializer=post__service__pb2.DashboardPostDetailsResponse.FromString,
+                _registered_method=True)
 
 
 class PostServiceServicer(object):
@@ -193,6 +198,12 @@ class PostServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def DashboardPostDetails(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PostServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -265,6 +276,11 @@ def add_PostServiceServicer_to_server(servicer, server):
                     servicer.PostHide,
                     request_deserializer=post__service__pb2.PostHideRequest.FromString,
                     response_serializer=post__service__pb2.PostHideResponse.SerializeToString,
+            ),
+            'DashboardPostDetails': grpc.unary_unary_rpc_method_handler(
+                    servicer.DashboardPostDetails,
+                    request_deserializer=post__service__pb2.DashboardPostDetailsRequest.FromString,
+                    response_serializer=post__service__pb2.DashboardPostDetailsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -645,6 +661,33 @@ class PostService(object):
             '/post_service.PostService/PostHide',
             post__service__pb2.PostHideRequest.SerializeToString,
             post__service__pb2.PostHideResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DashboardPostDetails(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/post_service.PostService/DashboardPostDetails',
+            post__service__pb2.DashboardPostDetailsRequest.SerializeToString,
+            post__service__pb2.DashboardPostDetailsResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -17,6 +17,7 @@ service PostService {
     rpc PostReport(PostReportRequest) returns (PostReportResponse);
     rpc GetAllAdminPost(GetAllAdminPostRequest) returns (GetAllAdminPostResponse);
     rpc PostHide(PostHideRequest) returns (PostHideResponse);
+    rpc DashboardPostDetails(DashboardPostDetailsRequest) returns (DashboardPostDetailsResponse);
   
     
 
@@ -122,6 +123,11 @@ message CommentPostRequest{
 message CommentPostResponse{
     string message = 1;
     int32 user_id = 2;
+    int32 comment_id = 3;
+    int32 reply_count = 4;
+    string content = 5;
+    string date = 6;
+    int32 id = 7;
 }
 
 
@@ -136,6 +142,13 @@ message CommentReplyRequest{
 
 message CommentReplyResponse{
     string message = 1;
+    int32 user_id = 2;
+    int32 mention_user_id = 3;
+    int32 comment_id = 4;
+    int32 reply_id = 5;
+    string content = 6;
+    string date = 7;
+    string mention_user_full_name = 8;
 }
 
 
@@ -255,6 +268,18 @@ message PostHideRequest{
 
 message PostHideResponse{
     string message = 1;
+}
+
+
+message DashboardPostDetailsRequest{}
+
+
+message DashboardPostDetailsResponse{
+    int32 all_posts = 1;
+    int32 hide_posts = 2;
+    int32 deleted_posts = 3;
+    int32 reported_posts = 4;
+    int32 all_reports = 5;
 }
 
 

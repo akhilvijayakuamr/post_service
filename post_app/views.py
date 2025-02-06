@@ -203,7 +203,6 @@ def reply_comment(request, context):
                         content=content)
         reply.save()
 
-        print(reply)
         
         data = {
             'message': 'reply on post',
@@ -215,8 +214,6 @@ def reply_comment(request, context):
             'date':str(reply.created_at),
             'mention_user_full_name':reply.mention_user_full_name
         }
-
-        print("data", data)
         
         return{
             'message': 'reply on post',
